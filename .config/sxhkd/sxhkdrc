@@ -1,0 +1,16 @@
+super + alt + m
+	~/.local/bin/movies.sh
+
+
+super + alt + l
+    ~/.local/bin/define.sh
+
+
+
+super + alt + k
+    ~/.local/bin/sys
+
+
+
+super + alt + a
+    ~/.local/bin/apps.sh

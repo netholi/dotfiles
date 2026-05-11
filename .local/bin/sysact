@@ -1,0 +1,22 @@
+
+#!/bin/sh
+
+choice=$(printf "lock\nsuspend\nreboot\nshutdown\nlogout" | dmenu -i -c -l 6)
+
+case "$choice" in
+    lock)      slock ;;
+    suspend)   systemctl suspend ;;
+    reboot)    systemctl reboot ;;
+    shutdown)  systemctl poweroff ;;
+    logout)    pkill dwm ;;
+esac
+
+choice=$(printf "lock\nsuspend\nreboot\nshutdown\nlogout" | dmenu -i)
+
+case "$choice" in
+    lock)      slock ;;
+    suspend)   systemctl suspend ;;
+    reboot)    systemctl reboot ;;
+    shutdown)  systemctl poweroff ;;
+    logout)    pkill dwm ;;
+esac

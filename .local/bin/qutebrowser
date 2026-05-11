@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+export PYTHONPATH="$HOME/.venvs/qute/lib/python3*/site-packages"
+exec /usr/bin/qutebrowser "$@"
+
+

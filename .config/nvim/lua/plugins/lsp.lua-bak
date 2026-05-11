@@ -1,0 +1,60 @@
+return {
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/nvim-cmp",         -- The completion engine
+      "hrsh7th/cmp-nvim-lsp",     -- The bridge between LSP and completion
+      "L3MON4D3/LuaSnip",         -- Required snippet engine
+    },
+    config = function()
+      -- 1. Setup Mason
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "clangd" },
+      })
+
+      -- 2. Setup Autocompletion (nvim-cmp)
+      local cmp = require("cmp")
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-Space>"] = cmp.mapping.complete(),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" }, -- This pulls data from clangd
+        }),
+      })
+
+      -- 3. Configure clangd (Modern 0.11+ style)
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      
+      -- Define the config
+      vim.lsp.config("clangd", {
+        capabilities = capabilities,
+        cmd = { "clangd", "--background-index" },
+      })
+
+      -- Enable the config
+      vim.lsp.enable("clangd")
+
+      -- 4. Keybindings
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+          local opts = { buffer = ev.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        end,
+      })
+    end,
+  },
+}

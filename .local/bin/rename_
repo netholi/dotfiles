@@ -1,0 +1,14 @@
+
+#!/usr/bin/env bash
+
+for f in *.mkv; do
+    new="$f"
+    new=$(printf "%s\n" "$new" | sed 's/ /_/g')
+
+    if [[ "$f" != "$new" ]]; then
+        echo "Renaming:"
+        echo "  $f"
+        echo "  → $new"
+        mv -n -- "$f" "$new"
+    fi
+done
