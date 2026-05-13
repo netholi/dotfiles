@@ -5,6 +5,7 @@ require("config.keymaps")
 require("config.autocmds")
 require("config.status")
 
+require("config.float-terminal")
 
 require("plugins.lsp")
 require("plugins.treesitter")
