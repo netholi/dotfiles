@@ -1,6 +1,6 @@
 #!/bin/bash
 
-choice=$(printf "File manager\nScreenshot\n" | dmenu -i -l 5 -c -p "Select:")
+choice=$(printf "File manager\nScreenshot\nWezterm" | dmenu -i -l 5 -c -p "Select:")
 
 case "$choice" in
     "File manager")
@@ -8,5 +8,8 @@ case "$choice" in
         ;;
     "Screenshot")
         flameshot gui &
+        ;;
+    "Wezterm")
+          flatpak run org.wezfurlong.wezterm &
         ;;
 esac
