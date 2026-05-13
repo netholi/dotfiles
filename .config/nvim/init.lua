@@ -11,3 +11,11 @@ require("plugins.treesitter")
 require("plugins.neo-tree")
 require("plugins.completion")
 require("plugins.mini")
+
+
+
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
+})
